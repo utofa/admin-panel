@@ -106,33 +106,51 @@ function addManufacturer() {
   }
 
 
-function addProvisions() {
-    const name = document.getElementById('newProvisionsName').value;
-    const price = document.getElementById('newProvisionsPrice').value;
-    const description = document.getElementById('newProvisionsDescription').value;
+  async function addTag() {
+    // 1. Получаем данные из формы
+    const tagName = document.getElementById('tagName').value.trim();
+    const resultElement = document.getElementById('addTagResult');
   
-    const formData = new FormData();
-    formData.append('name', name);
-    formData.append('price', price);
-    formData.append('description', description);
+    // 2. Проверяем заполнение поля
+    if (!tagName) {
+      resultElement.textContent = 'Ошибка: Введите название тега';
+      return;
+    }
   
-    
-    fetch('${API_URL}/admin/provisions/${provisions}', {
-      method: 'POST',
-      body: formData
-    })
-      .then(response => response.json())
-      .then(data => {
-        document.getElementById('addProductResult').textContent = 'Услуга добавлена успешно!';
-        console.log('Success:', data);
-      })
-      .catch(error => {
-        document.getElementById('addProductResult').textContent = 'Ошибка при добавлении услуги.';
-        console.error('Error:', error);
+    // 3. Формируем данные для отправки
+    const tagData = {
+      id: 0, // Сервер сам генерирует ID
+      tagName: tagName
+    };
+  
+    try {
+      // 4. Отправляем запрос (используем ваш стиль с ...headers)
+      const response = await fetch(`${API_URL}/admin/tags`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...headers  // Распаковываем глобальные headers
+        },
+        body: JSON.stringify(tagData)
       });
-  }
   
-
+      // 5. Обрабатываем ответ
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || 'Ошибка сервера');
+      }
+  
+      const result = await response.json();
+      resultElement.textContent = `Тег добавлен: ${JSON.stringify(result, null, 2)}`;
+      
+      // 6. Очищаем поле ввода
+      document.getElementById('tagName').value = '';
+  
+    } catch (error) {
+      resultElement.textContent = `Ошибка: ${error.message}`;
+      console.error('Ошибка добавления тега:', error);
+    }
+  }
 // Удаление товара
 function deleteProduct() {
   const productId = document.getElementById('deleteProductId').value;
