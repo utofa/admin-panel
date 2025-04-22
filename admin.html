@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Админ панель</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="container">
+    <h1>Админ панель</h1>
+
+    <!-- Добавление клиента -->
+    <h2>Добавить клиента</h2>
+<label for="newClientName">Имя клиента:</label>
+<input type="text" id="newClientName" placeholder="Введите имя клиента">
+
+<label for="newClientImage">Фото клиента:</label>
+<input type="file" id="newClientImage" accept="image/*"> <!-- Добавлен accept для ограничения типа файлов -->
+
+<button onclick="addClient()">Добавить клиента</button>
+
+<pre id="addClientResult"></pre>
+
+    <!-- Удаление клиента -->
+    <h2>Удалить клиента</h2>
+    <label for="deleteClientId">ID клиента:</label>
+    <input type="text" id="deleteClientId" placeholder="Введите ID клиента">
+    <button onclick="deleteClient()">Удалить клиента</button>
+
+    <pre id="deleteClientResult"></pre>
+
+    <h2>Обновить клиента</h2>
+<textarea id="updateClientJson" placeholder='{"id":7,"nameClient":"CocaCola"}' rows="4" cols="50"></textarea><br>
+<input type="file" id="updateClientImage"><br>
+<button onclick="updateClient()">Обновить</button>
+<pre id="updateClientResult"></pre>
+
+<h2>Добавить производителя</h2>
+
+<label for="manufacturerName">Название производителя:</label>
+<input type="text" id="manufacturerName" placeholder="Введите название">
+
+<button onclick="addManufacturer()">Добавить</button>
+<pre id="manufacturerResult"></pre>
+
+<script src="adminPanel.js"></script>
+</body>
+</html>
+
+    
+    
+    
